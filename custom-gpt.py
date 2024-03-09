@@ -7,6 +7,31 @@ from openai import OpenAI
 
 # todo add function that returns messages from gpt
 
+def compare_images_from_url_with_message(url1: str, url2: str, user_input: str = None):
+    return [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text":  # user_input
+                    "What’s the difference between these 2 images of the Aral Sea? Is the "
+                    "lake more full in the first or second image?"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": url1,
+                    },
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": url2
+                    },
+                },
+            ],
+        }
+    ]
+
+
 def new_gpt():
     dotenv.load_dotenv()
     client = OpenAI()
@@ -16,12 +41,16 @@ def new_gpt():
         if user_input == "stop":
             break
         completion = client.chat.completions.create(
-          model="gpt-3.5-turbo",  # todo change to gpt 4
-          messages=[
-            {"role": "user", "content": user_input}
-          ]
+            model="gpt-4-vision-preview",
+            messages=compare_images_from_url_with_message("https://upload.wikimedia.org/wikipedia/"
+                                                          "commons/a/a5/Aralsea_tmo_2014231_lrg.jpg",
+                                                          "https://upload.wikimedia.org/wikipedia/"
+                                                          "commons/2/23/Aral_Sea_August_2017.jpg"
+                                                          ),
+            max_tokens=2048
         )
 
+        print(completion.choices[0])
         print(completion.choices[0].message)
         print(completion.choices[0].message.content)
 

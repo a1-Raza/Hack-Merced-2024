@@ -9,7 +9,7 @@ const GeoLocationInput = () => {
     const { name, value } = e.target;
     setLocation({
       ...location,
-      [name]: value
+      [name]: parseFloat(value) // Parse input value as a float
     });
   };
 

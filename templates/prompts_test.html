@@ -20,25 +20,26 @@
     header {
       background: #002856; /* Merced Colors */
       color: #DAA900; /* Golden text color */
-      width: 100%;
-      padding: 10px 20px; 
+      width: 100%; 
+      padding: 10px 20px;
       box-sizing: border-box; 
       display: flex;
-      align-items: center;
+      align-items: center; 
       position: fixed; 
       top: 0; 
       left: 0; 
     }
 
     header h1 {
-      margin: 0;
+      margin: 0; 
       font-family: 'Times New Roman', Times, serif;
     }
 
     #promptText {
       text-align: center;
-      font-size: 24px;
-      margin-top: 60px; 
+      font-size: 48px; 
+      font-weight: bold; 
+      margin-top: -300px;
     }
 
     #promptForm {
@@ -46,17 +47,60 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      resize: none;
-      margin-top: 20px;
+      margin-top: 40px; /* Adjusted margin */
     }
 
-    #promptInput {
-      margin-top: 10px;
-      resize: none;
+    .promptInput {
+      width: 400px;
+      height: 40px;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px; /* Adjusted margin */
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
     }
 
-    #promptList {
-      margin-top: 20px;
+    .promptInput:focus {
+      border-color: #007bff; /* Change border color on focus */
+    }
+
+    .promptInput::placeholder {
+      color: #999; /* Light gray color */
+      transition: color 0.3s ease; /* Smooth transition for placeholder color */
+    }
+
+    .promptInput:focus::placeholder {
+      color: transparent; /* Make placeholder text transparent on focus */
+    }
+
+    #promptSubmit {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    }
+
+    #promptSubmit:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes shrink {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.8);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
   </style>
 </head>
@@ -66,15 +110,25 @@
   </header>
   <main>
     <img src="../images/globe.jpg" alt="Globe picture" style="width: 100%; max-width: 600px; position: absolute; top: 0; right: 0; margin-top: 20px;">
-    <div id="promptText" class="prompt-text">Select your location</div>
+    <div id="promptText" class="prompt-text">Enter Coordinates</div>
     <form id="promptForm">
-      <textarea id="promptInput" name="promptText" rows="4" cols="50" required></textarea>
-      <button type="submit">Submit</button>
+      <input id="longitudeInput" class="promptInput" type="text" name="longitude" placeholder="Longitude" required>
+      <input id="latitudeInput" class="promptInput" type="text" name="latitude" placeholder="Latitude" required>
+      <button id="promptSubmit" type="submit" onclick="animateButton()">Submit</button>
     </form>
     <div id="promptList" class="chat-container">
       <!-- Prompt list will be displayed here -->
     </div>
   </main>
-  <script src="prompts_scripts.js"></script>
+    <!-- Script to animate button -->
+  <script>
+    function animateButton() {
+      const button = document.getElementById('promptSubmit');
+      button.style.animation = 'shrink 0.5s forwards';
+      setTimeout(() => {
+        button.style.animation = '';
+      }, 500);
+    }
+  </script>
 </body>
 </html>

@@ -67,3 +67,14 @@ main {
 #promptForm button:hover {
   background-color: #45a049;
 }
+
+#promptInput {
+  margin-top: 10px;
+  resize: none;
+  height: 40px; /* Initial height */
+  min-height: 40px; /* Minimum height */
+}
+
+#promptInput.empty {
+  color: #999; /* Light gray color */
+}

@@ -1,25 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const promptForm = document.getElementById('promptForm');
-  const promptList = document.getElementById('promptList');
+  const promptInput = document.getElementById('promptInput');
 
-  promptForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const promptText = document.getElementById('promptInput').value.trim();
-
-    if (promptText !== '') {
-      createPrompt(promptText);
-    } else {
-      alert('Please enter a prompt.');
-    }
-
-    promptForm.reset();
+  // Hide placeholder text when the textarea is focused
+  promptInput.addEventListener('focus', function() {
+      promptInput.placeholder = '';
   });
 
-  function createPrompt(promptText) {
-    const promptItem = document.createElement('div');
-    promptItem.classList.add('chat-message');
-    promptItem.textContent = promptText;
-    promptList.appendChild(promptItem);
-  }
+  // Show placeholder text when the textarea loses focus and is empty
+  promptInput.addEventListener('blur', function() {
+      if (promptInput.value.trim() === '') {
+          promptInput.placeholder = 'Type your input';
+      }
+  });
+
+  // Adjust textarea height dynamically based on content
+  promptInput.addEventListener('input', function() {
+      promptInput.style.height = 'auto';
+      promptInput.style.height = promptInput.scrollHeight + 'px';
+  });
+
+  // Trigger input event on page load to initialize the textarea
+  promptInput.dispatchEvent(new Event('input'));
 });

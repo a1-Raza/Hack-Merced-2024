@@ -14,8 +14,7 @@ client_secret = os.getenv("IMGUR_CLIENT_SECRET")
 
 def get_image(lat: float, lon: float, date: str, dim: float) -> str:
 
-    response = requests.get(f"https://api.nasa.gov/planetary/earth/assets?lon={lon}&lat={lat}&date={date}"
-                            f"&dim={dim}&api_key={NASA_API_KEY}")
+    response = requests.get(f"https://api.nasa.gov/planetary/earth/assets?lon={lon}&lat={lat}&date={date}&dim={dim}&api_key={NASA_API_KEY}")
 
     if response.status_code == 200:
         try:
@@ -38,6 +37,7 @@ def get_image(lat: float, lon: float, date: str, dim: float) -> str:
             client = ImgurClient(client_id, client_secret)
             uploaded_image = client.upload_from_path("downloaded_image.png", anon=True)
             print(f"Image uploaded! Direct link: {uploaded_image['link']}")
+            sleep(3)
             return uploaded_image["link"]
 
         except requests.exceptions.JSONDecodeError:

@@ -12,7 +12,7 @@ from satelliteApi import get_image
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
-def new_gpt(lat1, lon1, date1, dim1, lat2, lon2, date2, dim2: float, special_instructions: str = None):
+def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_instructions: str = None):
 
     completion = client.chat.completions.create(
         model="gpt-4-vision-preview",
@@ -25,6 +25,7 @@ def new_gpt(lat1, lon1, date1, dim1, lat2, lon2, date2, dim2: float, special_ins
                              "The point of interest is the body of water centered in the middle of the picture."
                              "Please disregard factors such as color, seasonal changes, and image quality; "
                              "these images may have been taken at different times of day, and times of year."
+                             "There may be artifacts in these images. Please try and work through them if you can."
                              "Likewise, please ignore land use changes. There may be changes in nearby"
                              "buildings. Please focus your area on the body of water and the things related to it."
                              "If there is an issue with the images, please say so in your reply. Please"
@@ -34,18 +35,19 @@ def new_gpt(lat1, lon1, date1, dim1, lat2, lon2, date2, dim2: float, special_ins
                              "one or both of the images are mostly or entirely white, *always* state that analysis is"
                              "not possible because of thick cloud cover, and attempt to analyze the unobstructed"
                              "image if possible. In the event of thick cloud cover, advise the user to 'change the"
-                             "date by one month for a crisper image' in your reply."
+                             "date by one month for a crisper image' in your reply. If the images are very dark, it may"
+                             "be night when the images are taken. Please *always* note this in your reply as the cause."
                      },
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": get_image(lat1, lon1, date1, dim1),
+                            "url": get_image(lat, lon, date1, dim),
                         },
                     },
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": get_image(lat2, lon2, date2, dim2),
+                            "url": get_image(lat, lon, date2, dim),
                         },
                     },
                     {
@@ -66,9 +68,27 @@ def new_gpt(lat1, lon1, date1, dim1, lat2, lon2, date2, dim2: float, special_ins
 if __name__ == "__main__":
     dotenv.load_dotenv()
     client = OpenAI()
-
+    new_gpt(32.733, -91.117, 0.50, "2019-01-15", "2020-01-01")
+    '''
     while True:
         user_input = input("input here: ")
         if user_input in ["stop", "exit", "quit"]:
             break
-        new_gpt(37.38, -120.43, "2016-01-01", 0.10, 37.38, -120.43, "2015-01-01", 0.10)
+        new_gpt(33.33, -115.84, "2015-06-01", 1.00, 33.33, -115.84, "2022-06-01", 1.00)
+    '''
+    '''
+        Mississippi River:
+        32.733, -91.117, 0.50
+        Aral Sea:
+        45.0, 59.0, 1.5
+        St. Lawrence River:
+        45.0, -74.5, 1.0
+        Salton Sea
+        33.33, -115.84, 1.0
+        LA River:
+        34.00, -118.2, 0.10
+        Panama Canal:
+        9.10, -79.65, 0.10
+        Lake Managua
+        12.33, -86.33, 0.50
+        '''

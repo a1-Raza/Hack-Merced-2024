@@ -3,6 +3,10 @@ import dotenv
 from openai import OpenAI
 
 
+# todo add async that awaits call from frontend
+
+# todo add function that returns messages from gpt
+
 def new_gpt():
     dotenv.load_dotenv()
     client = OpenAI()
@@ -12,7 +16,7 @@ def new_gpt():
         if user_input == "stop":
             break
         completion = client.chat.completions.create(
-          model="gpt-3.5-turbo",
+          model="gpt-3.5-turbo",  # todo change to gpt 4
           messages=[
             {"role": "user", "content": user_input}
           ]

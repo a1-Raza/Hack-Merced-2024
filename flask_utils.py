@@ -6,11 +6,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # Pass the map HTML to the template
-    return render_template('map.html')
-
-@app.route('/test')
-def test():
     # new coordinates for the map's center
     map_location = [37.350567, -120.427406]
     map_zoom_start = 8
@@ -22,7 +17,7 @@ def test():
     map_html = my_map._repr_html_()
 
     # Pass the map HTML to the template
-    return render_template('flasktest.html', map_html=map_html)
+    return render_template('flaskmap.html', map_html=map_html)
 
 if __name__ == '__main__':
     app.run(debug=True)

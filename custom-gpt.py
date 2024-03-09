@@ -7,10 +7,6 @@ from openai import OpenAI
 
 # todo add function that returns messages from gpt
 
-def encode_image(image_path):
-    with open(image_path, "rb") as image_file:
-        return base64.b64encode(image_file.read()).decode('utf-8')
-
 
 def compare_images_from_url_with_message(url1: str, url2: str, user_input: str = None):
     return [

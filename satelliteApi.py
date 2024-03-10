@@ -3,7 +3,6 @@ import dotenv
 import os
 import requests
 from imgurpython import ImgurClient
-from time import sleep
 
 dotenv.load_dotenv()
 
@@ -37,7 +36,6 @@ def get_image(lat: float, lon: float, date: str, dim: float) -> str:
             client = ImgurClient(client_id, client_secret)
             uploaded_image = client.upload_from_path("downloaded_image.png", anon=True)
             print(f"Image uploaded! Direct link: {uploaded_image['link']}")
-            sleep(3)
             return uploaded_image["link"]
 
         except requests.exceptions.JSONDecodeError:

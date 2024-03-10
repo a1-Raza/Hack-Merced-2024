@@ -12,7 +12,9 @@ from satelliteApi import get_image
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
-def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_instructions: str = None):
+def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_instructions: str = None) -> tuple[str, str, str]:
+
+    image_url1, image_url2 = get_image(lat, lon, date1, dim), get_image(lat, lon, date2, dim)
 
     completion = client.chat.completions.create(
         model="gpt-4-vision-preview",
@@ -41,13 +43,13 @@ def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": get_image(lat, lon, date1, dim),
+                            "url": image_url1,
                         },
                     },
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": get_image(lat, lon, date2, dim),
+                            "url": image_url2,
                         },
                     },
                     {
@@ -63,6 +65,7 @@ def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_
     print(completion.choices[0])
     print(completion.choices[0].message)
     print(completion.choices[0].message.content)
+    return image_url1, image_url2, completion.choices[0].message.content
 
 
 if __name__ == "__main__":

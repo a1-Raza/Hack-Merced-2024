@@ -15,7 +15,9 @@ def force(lat, lon, dim):
 
             response = requests.get(f"https://api.nasa.gov/planetary/earth/assets?lon={lon}"
                                     f"&lat={lat}&date={date}&dim={dim}&api_key={NASA_API_KEY}").json()
-            webbrowser.open(response['url'])
+            webbrowser.open(response["url"])
+            print(date, response["url"])
+
 
 if __name__ == "__main__":
     # force()

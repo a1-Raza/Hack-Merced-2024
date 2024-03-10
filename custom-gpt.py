@@ -27,6 +27,8 @@ def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_
                              "The point of interest is the body of water centered in the middle of the picture."
                              "Please disregard factors such as color, seasonal changes, and image quality; "
                              "these images may have been taken at different times of day, and times of year."
+                             "Most of these images may be in low lighting conditions. If there is no notable change,"
+                             "feel free to say as much."
                              "There may be artifacts in these images. Please try and work through them if you can."
                              "Likewise, please ignore land use changes. There may be changes in nearby"
                              "buildings. Please focus your area on the body of water and the things related to it."
@@ -71,7 +73,7 @@ def new_gpt(lat: float, lon: float, dim: float, date1: str, date2: str, special_
 if __name__ == "__main__":
     dotenv.load_dotenv()
     client = OpenAI()
-    new_gpt(32.733, -91.117, 0.50, "2019-01-15", "2020-01-01")
+    new_gpt(34.6538, -118.7722, 0.10, "2019-08-1", "2021-03-01")
     '''
     while True:
         user_input = input("input here: ")
@@ -94,4 +96,9 @@ if __name__ == "__main__":
         9.10, -79.65, 0.10
         Lake Managua
         12.33, -86.33, 0.50
+        # Curated
+        Lake Kaweah:
+        36.4053, -118.9870, 0.10 - 2018-09-01, 2022-06-01
+        good demo of dark comparison
+        
         '''
